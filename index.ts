@@ -42,6 +42,21 @@ app.get('/tasks', (req: Request, res: Response) => {
     res.json(tasks);
 })
 
+app.post('/tasks', (req: Request, res: Response) => {
+    const { title } = req.body;
+    if(!title){
+        return res.status(400).json({ error: 'Task title is required'});
+    }
+
+    const newId = tasks.length > 0 ? Math.max(...tasks.map(t => t.id)) + 1 : 1;
+    const newTask: Task = { id: newId, title, done: false};
+
+    tasks.push(newTask);
+    res.status(201).json(newTask);
+    
+    
+})
+
 app.get('/tasks/:id', (req: Request, res: Response) => {
     const taskId = parseInt(req.params.id);
     const task = tasks.find(task => task.id === taskId);
@@ -51,6 +66,7 @@ app.get('/tasks/:id', (req: Request, res: Response) => {
         res.status(404).json({ error: `Task with ID ${taskId} not found`});
     }
 })
+
 
 
  
