@@ -1,5 +1,7 @@
 import express, { Request, Response } from 'express';
 import console = require('node:console');
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "./openapi.json";
 const app = express();
 interface Task {
     id: number;
@@ -23,6 +25,9 @@ let tasks: Task[] = [
 const port= 3000;
 
 app.use(express.json());
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 app.get("/", (req: Request, res: Response) => {
     res.json({
