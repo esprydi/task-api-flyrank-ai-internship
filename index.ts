@@ -67,7 +67,37 @@ app.get('/tasks/:id', (req: Request, res: Response) => {
     }
 })
 
+app.put('/tasks/:id', (req: Request, res: Response) => {
+    const taskId = parseInt(req.params.id);
+    const { title, done } = req.body;
+    const taskIndex = tasks.findIndex(task => task.id === taskId);
+    if (taskIndex === -1) {
+        res.status(404).json({ error: `Task with ID ${taskId} not found`});
 
+    }  
+
+    if (title === undefined && done === undefined){
+        return res.status(404).json({ error: `No update data provoded`});
+    }
+
+    if (title !== undefined)
+        tasks[taskIndex].title = title;
+    if (done !== undefined)
+        tasks[taskIndex].done = done;
+    
+    res.json(tasks[taskIndex]);
+})
+
+app.delete("/tasks/:id", (req:Request, res: Response) => {
+    const taskId = parseInt(req.params.id);
+    const taskIndex = tasks.findIndex(task => task.id === taskId);
+    if (taskIndex === -1) {
+        return res.status(404).json({ error: `Task with ID ${taskId} not found`});
+    }
+    tasks.splice(taskIndex, 1);
+    res.status(204).send();
+})
+  
 
  
 app.listen(port, () => {
