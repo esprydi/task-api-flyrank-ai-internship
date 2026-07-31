@@ -7,7 +7,11 @@
   "paths": {
     "/tasks": {
       "get": {
-        "summary": "Get all tasks",
+        "summary": "Get all tasks (supports filtering and search)",
+        "parameters": [
+          { "name": "done", "in": "query", "required": false, "schema": { "type": "boolean" }, "description": "Filter by done status" },
+          { "name": "search", "in": "query", "required": false, "schema": { "type": "string" }, "description": "Search by task title" }
+        ],
         "responses": {
           "200": { "description": "Success" }
         }
@@ -78,6 +82,22 @@
         "responses": {
           "204": { "description": "Deleted successfully" },
           "404": { "description": "Task not found" }
+        }
+      }
+    },
+    "/stats": {
+      "get": {
+        "summary": "Get task statistics",
+        "responses": {
+          "200": { "description": "Success" }
+        }
+      }
+    },
+    "/reset": {
+      "post": {
+        "summary": "Reset tasks to default state",
+        "responses": {
+          "200": { "description": "Success" }
         }
       }
     }
