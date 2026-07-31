@@ -15,11 +15,13 @@ npm install && npm run dev
 | --- | --- | --- |
 | `GET` | `/` | Get basic API information |
 | `GET` | `/health` | Server health check |
-| `GET` | `/tasks` | Retrieve all tasks |
+| `GET` | `/tasks` | Retrieve all tasks (Supports `?done=true` and `?search=keyword`) |
 | `GET` | `/tasks/:id` | Retrieve a specific task by ID |
 | `POST` | `/tasks` | Create a new task (Requires JSON body with `title`) |
 | `PUT` | `/tasks/:id` | Update an existing task (Can update `title` and/or `done`) |
 | `DELETE` | `/tasks/:id` | Delete a task |
+| `GET` | `/stats` | Get task statistics (total, done, open) |
+| `POST` | `/reset` | Reset tasks to default state |
 
 ## Example Output (curl)
 
